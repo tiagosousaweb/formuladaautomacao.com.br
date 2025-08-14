@@ -107,15 +107,15 @@ function App() {
       </div>
 
       {/* Header com Navegação */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-xl border-b border-white/20">
-        <div className="container-tight py-4">
-          <div className="flex items-center justify-between">
+      <header className={`fixed top-0 left-0 right-0 z-50 ${scrollY > 0 ? 'bg-[#121929]' : 'bg-transparent'} transition-colors duration-300`}>
+        <div className="container-tight">
+          <div className="h-14 flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
+              <div className="w-9 h-9 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-lg flex items-center justify-center">
                 <span className="text-white text-xl">⚡</span>
               </div>
-              <span className="text-xl font-bold text-white">Fórmula da Automação</span>
+              <span className="text-[15px] font-bold bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent">Fórmula da Automação</span>
             </div>
             
             {/* Navegação Central */}
@@ -130,7 +130,7 @@ function App() {
                 <button
                   key={index}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-white/80 hover:text-white transition-colors duration-300 font-medium"
+                  className="text-white/90 hover:text-white transition-colors duration-300 font-medium text-sm"
                 >
                   {item.label}
                 </button>
@@ -138,7 +138,7 @@ function App() {
             </nav>
             
             {/* Botão CTA */}
-            <a href={purchaseUrl} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transform hover:scale-105 transition-all duration-300">
+            <a href={purchaseUrl} target="_blank" rel="noopener noreferrer" className="px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-semibold rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transition-colors duration-300 text-sm">
               Quero Comprar Agora
             </a>
           </div>
