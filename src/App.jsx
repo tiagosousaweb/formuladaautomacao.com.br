@@ -27,6 +27,8 @@ function App() {
     }
   }
 
+  const purchaseUrl = 'https://pay.kiwify.com.br/KQZShdh'
+
   return (
     <div className="min-h-screen site-bg overflow-x-hidden font-['Inter',-apple-system,BlinkMacSystemFont,'Segoe_UI',Roboto,sans-serif]">
       {/* Elementos de Paralaxe de Fundo - Bolinhas Flutuantes */}
@@ -136,9 +138,9 @@ function App() {
             </nav>
             
             {/* Botão CTA */}
-            <button onClick={() => scrollToSection('pricing')} className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transform hover:scale-105 transition-all duration-300">
+            <a href={purchaseUrl} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transform hover:scale-105 transition-all duration-300">
               Quero Comprar Agora
-            </button>
+            </a>
           </div>
         </div>
       </header>
@@ -160,10 +162,10 @@ function App() {
             
             {/* Botões CTA */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-              <button className="btn-cta text-lg flex items-center justify-center" onClick={() => scrollToSection('pricing')}>
+              <a href={purchaseUrl} target="_blank" rel="noopener noreferrer" className="btn-cta text-lg flex items-center justify-center">
                 <span>Quero Comprar Agora</span>
                 <span className="text-xl">→</span>
-              </button>
+              </a>
               <button className="px-8 py-4 border border-white/20 text-white font-semibold rounded-full text-lg hover:bg-white/10 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2" onClick={() => scrollToSection('course')}>
                 <span className="text-white">▷</span>
                 <span>Ver Demonstração</span>
@@ -543,10 +545,10 @@ function App() {
               
               {/* CTA */}
               <div className="text-center mt-8 reveal">
-                <div className="btn-cta text-sm md:text-base">
+                <a href={purchaseUrl} target="_blank" rel="noopener noreferrer" className="btn-cta text-sm md:text-base">
                   SIM, QUERO GARANTIR MINHA VAGA AGORA!
                   <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/15">⚡</span>
-                </div>
+                </a>
                 <div className="mt-4 space-y-2 text-white/70 text-xs">
                   <div className="flex items-center justify-center gap-2"><span>🔒</span><span>Pagamento 100% seguro</span></div>
                   <div className="flex items-center justify-center gap-2"><span>✅</span><span>Acesso imediato após confirmação</span></div>
