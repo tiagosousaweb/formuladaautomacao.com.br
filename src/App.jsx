@@ -6,16 +6,24 @@ function App() {
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY)
+      // reveal-on-scroll
+      document.querySelectorAll('.reveal').forEach((el) => {
+        const rect = el.getBoundingClientRect()
+        if (rect.top < window.innerHeight * 0.85) {
+          el.classList.add('is-visible')
+        }
+      })
     }
 
     window.addEventListener('scroll', handleScroll)
+    handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   }
 
@@ -110,19 +118,25 @@ function App() {
             
             {/* Navegação Central */}
             <nav className="hidden md:flex space-x-8">
-              {['Início', 'Sobre', 'Curso', 'Instrutor', 'Preço'].map((item, index) => (
+              {[
+                { label: 'Início', id: 'hero' },
+                { label: 'Sobre', id: 'about' },
+                { label: 'Curso', id: 'course' },
+                { label: 'Instrutor', id: 'instructor' },
+                { label: 'Preço', id: 'pricing' }
+              ].map((item, index) => (
                 <button
                   key={index}
-                  onClick={() => scrollToSection(item === 'Início' ? 'hero' : item.toLowerCase())}
+                  onClick={() => scrollToSection(item.id)}
                   className="text-white/80 hover:text-white transition-colors duration-300 font-medium"
                 >
-                  {item}
+                  {item.label}
                 </button>
               ))}
             </nav>
             
             {/* Botão CTA */}
-            <button className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transform hover:scale-105 transition-all duration-300">
+            <button onClick={() => scrollToSection('pricing')} className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transform hover:scale-105 transition-all duration-300">
               Quero Comprar Agora
             </button>
           </div>
@@ -132,26 +146,25 @@ function App() {
       {/* Hero Section - Primeira Dobra */}
       <section id="hero" className="relative min-h-screen flex items-center justify-center pt-20 section-veil">
         <div className="relative z-10 text-center container-tight">
-          <div className="animate-fade-in-up">
+          <div className="animate-fade-in-up reveal">
             {/* Título Principal */}
-            <h1 className="h1-display-hero section-title heading-gradient stack-title">
+            <h1 className="h1-display-hero section-title stack-title heading-gradient-full">
               <span>Fórmula da</span>
               <br />
               <span>Automação</span>
             </h1>
             
-            {/* Subtítulo */}
             <p className="subtitle-xl section-subtitle stack-subtitle max-w-4xl mx-auto">
-              Domine <span className="text-yellow-300">N8N</span>, <span className="text-yellow-300">Evolution API</span> e <span className="text-yellow-300">Chatwoot</span> com o método único de Tiago Sousa. Transforme-se em especialista em automação e crie um negócio lucrativo.
+              Domine <span className="text-gradient-cyan">N8N</span>, <span className="text-gradient-purple">Evolution API</span> e <span className="text-gradient-pink">Chatwoot</span> com o método único de Tiago Sousa. Transforme-se em especialista em automação e crie um negócio lucrativo.
             </p>
             
             {/* Botões CTA */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-              <button className="btn-cta text-lg flex items-center justify-center">
+              <button className="btn-cta text-lg flex items-center justify-center" onClick={() => scrollToSection('pricing')}>
                 <span>Quero Comprar Agora</span>
                 <span className="text-xl">→</span>
               </button>
-              <button className="px-8 py-4 border border-white/20 text-white font-semibold rounded-full text-lg hover:bg-white/10 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2">
+              <button className="px-8 py-4 border border-white/20 text-white font-semibold rounded-full text-lg hover:bg-white/10 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2" onClick={() => scrollToSection('course')}>
                 <span className="text-white">▷</span>
                 <span>Ver Demonstração</span>
               </button>
@@ -167,7 +180,7 @@ function App() {
               ].map((stat, index) => (
                 <div 
                   key={index}
-                  className="text-center group"
+                  className="text-center group reveal"
                 >
                   <div className="text-3xl md:text-4xl font-bold text-white mb-2 group-hover:scale-110 transition-transform duration-300">
                     {stat.number}
@@ -183,7 +196,7 @@ function App() {
       {/* About Section */}
       <section id="about" className="relative section-y section-veil">
         <div className="relative z-10 container-tight">
-          <div className="text-center mb-16 animate-fade-in">
+          <div className="text-center mb-16 animate-fade-in reveal">
             <h2 className="h2-display section-title heading-gradient stack-title">Por que a Fórmula da Automação?</h2>
             <p className="subtitle-xl section-subtitle stack-subtitle max-w-4xl mx-auto">
               Não é apenas um curso técnico. É um método completo para transformar conhecimento em automação em um negócio lucrativo e escalável, com estratégias testadas no mercado real.
@@ -191,7 +204,7 @@ function App() {
             <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto rounded-full"></div>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
             {[
               {
                 title: "Domínio Técnico Completo",
@@ -232,7 +245,7 @@ function App() {
             ].map((feature, index) => (
               <div 
                 key={index}
-                className="group relative overflow-hidden rounded-3xl p-8 border border-white/10 hover:border-white/20 transform hover:scale-105 transition-all duration-500 bg-white/5 backdrop-blur-xl"
+                className="group relative overflow-hidden rounded-3xl p-8 transform hover:scale-105 transition-all duration-500 card-surface-muted reveal"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="text-4xl mb-4">{feature.icon}</div>
@@ -252,7 +265,7 @@ function App() {
       <section id="course" className="relative section-y section-veil">
         <div className="relative z-10 container-tight">
           {/* Título e subtítulo da seção */}
-          <div className="text-center mb-14 animate-fade-in">
+          <div className="text-center mb-14 animate-fade-in reveal">
             <h2 className="h2-display section-title heading-gradient stack-title">Fórmula da Automação</h2>
             <p className="subtitle-xl section-subtitle stack-subtitle max-w-4xl mx-auto">
               O método completo para dominar automação e transformar isso em negócio lucrativo.
@@ -269,7 +282,7 @@ function App() {
                   'Introdução ao Mundo da Automação',
                   'Instalação e Configuração do n8n',
                   'Fundamentos: Nodes, Workflows e Triggers',
-                  '... e muito mais com exemplos Reais!'
+                  'Exemplos Reais de Automações e muito mais...'
                 ],
                 gradient: 'from-blue-500 to-cyan-500',
                 icon: '⚡'
@@ -326,9 +339,9 @@ function App() {
             ].map((module, idx) => (
               <div
                 key={idx}
-                className={`card-zoom h-full flex flex-col card-surface p-8 hover:border-white/20 ${
-                  module.special ? 'ring-2 ring-red-400/40' : ''
-                }`}
+                  className={`card-zoom h-full flex flex-col card-surface-muted p-8 ${
+                    module.special ? 'md:col-span-2 lg:col-span-2 ring-2 ring-red-400/40' : ''
+                  } reveal`}
               >
                 <div className="flex items-start justify-between mb-6">
                   <div className="flex items-center gap-3">
@@ -339,7 +352,7 @@ function App() {
                     {module.tag}
                   </span>
                 </div>
-                <ul className="space-y-3 text-white/80">
+                <ul className="space-y-3 text-white/80 list-compact">
                   {module.topics.map((topic, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <span className="text-emerald-400 mt-0.5">✔</span>
@@ -356,7 +369,7 @@ function App() {
       {/* Instructor Section */}
       <section id="instructor" className="relative section-y section-veil">
         <div className="relative z-10 container-tight">
-          <div className="text-center mb-16 animate-fade-in">
+          <div className="text-center mb-16 animate-fade-in reveal">
             <h2 className="h2-display section-title heading-gradient stack-title">Seu Instrutor</h2>
             <p className="text-xl text-white/70 max-w-3xl mx-auto">
               Conheça o especialista que vai guiá-lo nesta jornada de transformação.
@@ -364,8 +377,8 @@ function App() {
           </div>
           
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-in-up">
-              <div className="card-surface p-8 hover:border-cyan-400/30 transition-all duration-500">
+            <div className="reveal">
+              <div className="card-surface-muted p-8 transition-all duration-500">
                 <div className="mb-6 flex justify-center">
                   <span className="avatar-circle">
                     <img
@@ -382,8 +395,8 @@ function App() {
               </div>
             </div>
             
-            <div className="animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-              <div className="card-surface p-8">
+            <div className="reveal" style={{ animationDelay: '200ms' }}>
+              <div className="card-surface-muted p-8">
                 <h3 className="h3-title text-white mb-6">Especialista em Automação</h3>
                 <p className="text-white/80 mb-6">
                   Programador por formação e especialista em automações, com anos de experiência transformando processos manuais em soluções inteligentes e escaláveis.
@@ -419,7 +432,7 @@ function App() {
                   ].map((stat, index) => (
                     <div 
                       key={index}
-                      className="text-center"
+                      className="text-center reveal"
                     >
                       <div className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-1">
                         {stat.number}
@@ -437,39 +450,42 @@ function App() {
       {/* Pricing Section */}
       <section id="pricing" className="relative section-y section-veil">
         <div className="relative z-10 container-narrow">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Pronto para Construir Seu <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Futuro</span> com Automação?
+          <div className="text-center mb-16 animate-fade-in reveal">
+            <h2 className="text-4xl md:text-5xl section-title heading-gradient mb-6">
+              Pronto para Construir Seu <span className="">Futuro</span> com Automação?
             </h2>
-            <p className="text-xl text-white/70 max-w-3xl mx-auto">
+            <p className="text-xl section-subtitle max-w-3xl mx-auto">
               Acesso à Fórmula da Automação + Todos os Bônus
             </p>
           </div>
+
+          {/* Banner Promocional */}
+          <div className="promo-banner mb-6 reveal">
+            <div className="promo-title">
+              <span className="promo-icon">⏱️</span>
+              OFERTA POR TEMPO LIMITADO
+            </div>
+            <div className="promo-sub text-center">
+              Receba Acesso a <span style={{ color: '#facc15', fontWeight: 800 }}>Aceleradores de Resultado</span> (Hoje Gratuitos)
+            </div>
+          </div>
           
           {/* Card principal */}
-          <div className="card-surface p-8 mb-8">
-            {/* Badge 'MAIS POPULAR' */}
-            <div className="flex justify-center -mt-6 mb-4">
-              <span className="inline-flex items-center gap-2 text-white text-xs font-bold px-3 py-1 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 shadow-md">
-                <span>★</span>
-                MAIS POPULAR
-              </span>
-            </div>
-
+          <div className="card-surface p-8 mb-8 reveal">
             <div className="panel-soft p-8">
               <div className="text-center mb-6">
                 <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Fórmula da Automação + Bônus Exclusivos</h3>
                 <div className="flex items-center justify-center gap-3 mb-1">
-                  <div className="text-white/50 line-through text-sm">Valor Total: R$ 4.491</div>
-                  <span className="text-[10px] md:text-xs font-bold px-2 py-1 rounded-full bg-orange-500 text-white">99% OFF</span>
+                  <div className="text-white/50 line-through text-sm">Valor Total: R$ 297,00</div>
+                  <span className="text-[10px] md:text-xs font-bold px-2 py-1 rounded-full bg-orange-500 text-white">67% OFF</span>
                 </div>
-                <div className="text-4xl md:text-6xl font-extrabold text-white mb-1">R$ 47</div>
-                <div className="text-white/70">ou 12x de <span className="text-cyan-400 font-semibold">R$ 5,22</span> sem juros</div>
+                <div className="text-5xl md:text-6xl font-extrabold text-white mb-1">R$ 97</div>
+                <div className="text-white/70">ou 12x de <span className="text-cyan-400 font-semibold">R$ 10,03</span></div>
               </div>
               
               <div className="grid md:grid-cols-2 gap-8">
                 {/* O que está incluído */}
-                <div>
+                <div className="reveal">
                   <div className="flex items-center gap-2 text-white font-semibold mb-4">
                     <span className="text-emerald-400">✦</span>
                     <h4 className="text-xl">O que está incluído</h4>
@@ -481,10 +497,8 @@ function App() {
                       "Templates e automações prontas",
                       "Certificado de conclusão",
                       "Suporte técnico especializado",
-                      "Grupo VIP no Telegram",
                       "Atualizações gratuitas vitalícias",
-                      "Mentoria em grupo mensal",
-                      "Garantia de 30 dias",
+                      "Garantia de 7 dias",
                       "Acesso imediato após pagamento"
                     ].map((item, index) => (
                       <li key={index} className="flex items-start gap-3 text-white/80">
@@ -495,8 +509,7 @@ function App() {
                   </ul>
                 </div>
                 
-                {/* Bônus Exclusivos */}
-                <div>
+                <div className="reveal">
                   <div className="flex items-center gap-2 text-white font-semibold mb-4">
                     <span className="text-purple-300">✦</span>
                     <h4 className="text-xl">Bônus Exclusivos</h4>
@@ -518,7 +531,7 @@ function App() {
                   </div>
                   
                   {/* Total dos bônus */}
-                  <div className="mt-6 rounded-xl border border-emerald-400/30 bg-emerald-500/20 p-4">
+                  <div className="mt-6 rounded-xl border border-emerald-400/30 bg-emerald-500/20 p-4 reveal">
                     <div className="text-center">
                       <div className="text-white/80 text-sm mb-1">Valor Total dos Bônus:</div>
                       <div className="text-emerald-400 font-extrabold text-lg">R$ 391</div>
@@ -529,13 +542,11 @@ function App() {
               </div>
               
               {/* CTA */}
-              <div className="text-center mt-8">
-                <button className="btn-cta text-sm md:text-base">
+              <div className="text-center mt-8 reveal">
+                <div className="btn-cta text-sm md:text-base">
                   SIM, QUERO GARANTIR MINHA VAGA AGORA!
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/15">
-                    ⚡
-                  </span>
-                </button>
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/15">⚡</span>
+                </div>
                 <div className="mt-4 space-y-2 text-white/70 text-xs">
                   <div className="flex items-center justify-center gap-2"><span>🔒</span><span>Pagamento 100% seguro</span></div>
                   <div className="flex items-center justify-center gap-2"><span>✅</span><span>Acesso imediato após confirmação</span></div>
@@ -546,7 +557,7 @@ function App() {
           </div>
           
           {/* Garantia */}
-          <div className="panel-soft p-8 border border-emerald-400/30">
+          <div className="panel-soft p-8 border border-emerald-400/30 reveal">
             <h3 className="text-2xl font-bold text-white mb-6 text-center">Garantia Incondicional de 7 Dias</h3>
             <p className="text-white/80 text-center mb-8 max-w-3xl mx-auto">
               Seu risco é zero. Se por qualquer motivo você não achar que este é o melhor investimento para sua carreira, basta pedir o reembolso e nós o devolveremos integralmente.
@@ -558,7 +569,7 @@ function App() {
                 { title: "Conteúdo Premium", description: "Material exclusivo e atualizado", icon: "📦" },
                 { title: "Garantia Total", description: "7 dias para testar sem riscos", icon: "🛡️" }
               ].map((feature, index) => (
-                <div key={index} className="text-center">
+                <div key={index} className="text-center reveal">
                   <div className="mx-auto mb-3 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center border border-white/20 text-xl">{feature.icon}</div>
                   <h4 className="text-lg font-bold text-white mb-1">{feature.title}</h4>
                   <p className="text-white/70 text-sm">{feature.description}</p>

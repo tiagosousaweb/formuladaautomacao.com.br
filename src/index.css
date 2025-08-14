@@ -10,10 +10,10 @@
   --brand-purple: #7c3aed;
   --brand-pink: #ec4899;
   --bg-deep: #0b1220;
-  --surface: rgba(17, 24, 39, 0.7);
-  --surface-soft: rgba(255, 255, 255, 0.06);
+  --surface: rgba(12, 18, 34, 0.48);            /* mais escuro e menos opaco */
+  --surface-soft: rgba(255, 255, 255, 0.05);     /* painéis internos sutis */
   --border-soft: rgba(255, 255, 255, 0.12);
-  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.06);    /* borda mais suave */
 }
 
 /* Refinos para pixel-perfect */
@@ -22,14 +22,28 @@
   --shadow-card: 0 12px 36px rgba(0, 0, 0, 0.35);
 }
 
-/* Títulos e subtítulos padronizados */
-.heading-gradient {
-  background: linear-gradient(90deg, var(--brand-cyan) 0%, var(--brand-purple) 50%, var(--brand-pink) 100%);
+/* Gradiente exato para headings (cyan -> purple -> pink) */
+:root {
+  --grad-heading: linear-gradient(90deg, #6EE7FF 0%, #22D3EE 22%, #8B5CF6 60%, #F472B6 100%);
+  --grad-cyan: linear-gradient(90deg, #6EE7FF 0%, #22D3EE 100%);
+  --grad-purple: linear-gradient(90deg, #C4B5FD 0%, #8B5CF6 100%);
+  --grad-pink: linear-gradient(90deg, #F9A8D4 0%, #F472B6 100%);
+}
+
+.heading-gradient,
+.heading-gradient-full {
+  background: var(--grad-heading);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
+/* Para o h1 cobrindo múltiplas linhas */
+.heading-gradient-full {
+  display: inline-block;
+}
+
+/* Títulos e subtítulos padronizados */
 .section-title {
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -42,7 +56,7 @@
 /* Painéis secundários (usado dentro do pricing) */
 .panel-soft {
   background: var(--surface-soft);
-  border: 1px solid var(--border-soft);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   backdrop-filter: blur(6px);
 }
@@ -80,7 +94,14 @@ body {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-card);
   backdrop-filter: blur(8px);
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+}
+
+/* Variação ainda mais discreta (módulos, about, instructor) */
+.card-surface-muted {
+  background: rgba(10, 16, 30, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
 }
 
 /* Badge pílula gradiente */
@@ -563,14 +584,24 @@ body {
   filter: saturate(1.05);
 } 
 
-/* Fundo global do site com glows sutis */
+/* Fundo global refinado (roxo profundo com vinheta) */
 .site-bg {
   position: relative;
+  min-height: 100vh;
   background:
-    radial-gradient(1200px 800px at 10% -10%, rgba(6, 182, 212, 0.12), transparent 60%),
-    radial-gradient(1200px 800px at 90% 20%, rgba(124, 58, 237, 0.10), transparent 60%),
-    radial-gradient(800px 600px at 50% 110%, rgba(236, 72, 153, 0.08), transparent 60%),
-    linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-deep) 100%);
+    radial-gradient(1100px 800px at 18% 15%, rgba(34, 211, 238, 0.12), transparent 60%),
+    radial-gradient(1000px 700px at 82% 75%, rgba(139, 92, 246, 0.14), transparent 60%),
+    radial-gradient(800px 600px at 50% -15%, rgba(244, 114, 182, 0.12), transparent 60%),
+    linear-gradient(180deg, #1B123B 0%, #3B1368 40%, #37115F 60%, #0B1425 100%);
+  overflow: hidden;
+}
+
+.site-bg::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0; height: 40vh;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.38) 100%);
+  pointer-events: none;
 }
 
 /* Separadores e respiro de seção */
@@ -739,4 +770,59 @@ body {
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
+} 
+
+/* Banner promocional acima do preço */
+.promo-banner {
+  border-radius: 22px;
+  padding: 20px 24px;
+  background: linear-gradient(180deg, rgba(255, 99, 99, 0.10) 0%, rgba(124, 58, 237, 0.08) 100%);
+  border: 1px solid rgba(255, 99, 99, 0.35);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Texto com degradê para acentos inline (ajustado) */
+.text-gradient-cyan { background: var(--grad-cyan); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.text-gradient-purple { background: var(--grad-purple); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.text-gradient-pink { background: var(--grad-pink); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+/* Efeito reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Centralização do título do banner */
+.promo-title {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centralizar */
+  text-align: center;      /* centralizar texto */
+  gap: 10px;
+  color: #ff8a8a;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 16px;
+}
+
+.promo-sub {
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+}
+
+.promo-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff8a8a;
 } 
