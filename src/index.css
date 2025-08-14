@@ -588,11 +588,7 @@ body {
 .site-bg {
   position: relative;
   min-height: 100vh;
-  background:
-    radial-gradient(1100px 800px at 18% 15%, rgba(34, 211, 238, 0.12), transparent 60%),
-    radial-gradient(1000px 700px at 82% 75%, rgba(139, 92, 246, 0.14), transparent 60%),
-    radial-gradient(800px 600px at 50% -15%, rgba(244, 114, 182, 0.12), transparent 60%),
-    linear-gradient(180deg, #1B123B 0%, #3B1368 40%, #37115F 60%, #0B1425 100%);
+  background: #1a2332;
   overflow: hidden;
 }
 
@@ -634,12 +630,12 @@ body {
 
 .section-veil::before {
   top: 0;
-  background: linear-gradient(to bottom, rgba(124, 58, 237, 0.10), transparent);
+  background: linear-gradient(to bottom, #1f2837 0%, rgba(31, 40, 55, 0) 100%);
 }
 
 .section-veil::after {
   bottom: 0;
-  background: linear-gradient(to top, rgba(124, 58, 237, 0.10), transparent);
+  background: linear-gradient(to top, #1f2837 0%, rgba(31, 40, 55, 0) 100%);
 } 
 
 /* Escala tipográfica (px) */

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 function App() {
   const [scrollY, setScrollY] = useState(0)
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +21,8 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  
+
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId)
     if (element) {
@@ -28,6 +31,7 @@ function App() {
   }
 
   const purchaseUrl = 'https://pay.kiwify.com.br/KQZShdh'
+  const headerOpacity = scrollY > 0 ? 1 : 0
 
   return (
     <div className="min-h-screen site-bg overflow-x-hidden font-['Inter',-apple-system,BlinkMacSystemFont,'Segoe_UI',Roboto,sans-serif]">
@@ -107,7 +111,7 @@ function App() {
       </div>
 
       {/* Header com Navegação */}
-      <header className={`fixed top-0 left-0 right-0 z-50 ${scrollY > 0 ? 'bg-[#121929]' : 'bg-transparent'} transition-colors duration-300`}>
+      <header className="fixed top-0 left-0 right-0 z-50 transition-colors duration-400" style={{ backgroundColor: `rgba(18, 25, 41, ${headerOpacity})` }}>
         <div className="container-tight">
           <div className="h-14 flex items-center justify-between">
             {/* Logo */}
