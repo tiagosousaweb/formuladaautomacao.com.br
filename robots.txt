@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://formuladaautomacao.com/sitemap.xml
+
+# Páginas importantes para SEO
+Allow: /#sobre
+Allow: /#curso
+Allow: /#instrutor
+Allow: /#preco
+
+# Otimização para bots de busca
+Crawl-delay: 1
